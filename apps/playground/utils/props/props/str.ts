@@ -1,0 +1,8 @@
+export const str1 = "Hello World"
+export const str2 = "the quick brown fox jumps over the lazy dog"
+export const str3 = "There are only 3 words"
+export const str4 = "A B c D E"
+export const str5 = "ALLCAPS WORDS ARE LOUDER"
+export const str6 = "Toto titi Mathieu Dev Wow"
+export const str7 = "state.name"
+export const str8="name"

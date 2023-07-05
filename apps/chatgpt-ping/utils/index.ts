@@ -1,0 +1,1 @@
+export { colorize } from './colorize'

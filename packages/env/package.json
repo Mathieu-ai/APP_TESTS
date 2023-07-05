@@ -1,0 +1,7 @@
+{
+    "name": "env",
+    "version": "0.0.1",
+    "description": "where env props are stored",
+    "main": ".env",
+    "license": "ISC"
+}

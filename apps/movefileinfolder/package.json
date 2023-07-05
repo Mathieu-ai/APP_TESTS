@@ -1,0 +1,25 @@
+{
+    "name": "movefileinfolder",
+    "version": "0.0.1",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "ts-node src",
+        "flat": "ts-node src/flat.ts",
+        "gN": "ts-node src/gn.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "colors": "^1.4.0",
+        "fs": "0.0.1-security",
+        "inquirer": "^8.0.0",
+        "inquirer-search-list": "^1.2.6",
+        "path": "^0.12.7"
+    },
+    "devDependencies": {
+        "@types/inquirer": "^9.0.3",
+        "@types/node": "^18.16.1"
+    }
+}

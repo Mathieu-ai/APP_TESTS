@@ -1,0 +1,23 @@
+{
+    "name": "chatgpt-ping",
+    "version": "0.1.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "ping-gpt": "ts-node chatCli.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.0.3",
+        "inquirer": "^8.0.0",
+        "openai": "^3.2.1"
+    },
+    "devDependencies": {
+        "@types/colors": "^1.2.1",
+        "@types/inquirer": "^9.0.3",
+        "colors": "^1.4.0",
+        "generic-functions.mlai": "^0.4.5"
+    }
+}
