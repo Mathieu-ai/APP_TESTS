@@ -16,6 +16,7 @@ export interface QuestionObject {
 export interface Answers {
     rootFolder: string;
     deleteFolders: boolean;
+    includeSubdirectories: boolean;
 }
 
 export interface AnswersGn {
@@ -23,8 +24,8 @@ export interface AnswersGn {
 }
 
 export interface MoveFilesOptions {
-    logFunction?: ( message: string ) => void;
-    errorFunction?: ( error: Error ) => void;
+    logFunction?: (message: string) => void;
+    errorFunction?: (error: Error) => void;
 }
 
 export type Pattern='brackets'|'braces'|'parentheses';

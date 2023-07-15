@@ -1,16 +1,19 @@
 {
     "name": "movefileinfolder",
-    "version": "0.1.0",
-    "description": "Scrips related to moving files from folders",
-    "main": "index.js",
+    "version": "0.1.1",
+    "description": "scripts related to folders",
+    "main": "src/move/index.ts",
     "scripts": {
-        "move": "ts-node src/move",
         "flat": "ts-node src/flat",
         "gBBP": "ts-node src/gBBP",
-        "gN": "ts-node src/gN"
+        "gN": "ts-node src/gN",
+        "move": "ts-node src/move"
     },
     "keywords": [
-        "typescript"
+        "typescript",
+        "fs",
+        "folders",
+        "mlai"
     ],
     "author": "Mathieu-ai",
     "license": "ISC",

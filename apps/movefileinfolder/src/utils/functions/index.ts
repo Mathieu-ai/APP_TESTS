@@ -1,4 +1,4 @@
-import { access as acc,stat as stats,constants,readdirSync,renameSync,rmdirSync,existsSync,mkdirSync } from 'fs';
+import { access as acc,stat as stats,constants,readdirSync,renameSync,rmdirSync,existsSync,mkdirSync,statSync } from 'fs';
 import { promisify } from 'util';
 import { Sims4Authors,affirmations,gameChoices,nonCharOptions,questions,} from "../props";
 import { readdir,mkdir,rename,opendir,writeFile } from 'fs/promises';
@@ -12,36 +12,48 @@ inquirer.registerPrompt( 'search-list',InquirerSearchList );
 export const access=promisify( acc );
 export const stat=promisify( stats );
 
-export function isAffirmative ( response: string,language: string ): boolean {
+export function isAffirmative( response: string,language: string ): boolean {
     return response===affirmations[ language ][ 0 ];
 }
 
-export function useFirstLetter ( option: string,language: string ): boolean {
+export function useFirstLetter( option: string,language: string ): boolean {
     return option===nonCharOptions[ language ][ 0 ];
 }
 
-export function getSimsAuthorsName ( fileName: string ): string {
+
+export function getSimsAuthorsName( fileName: string ): string {
     const normalizedFileName=fileName.toLowerCase().replace( /package|ts4script/g,'' );
-    let matches: string[]=[];
-    let match;
 
-    // Directly search for the special cases in the normalized file name
-    for( let specialCase of Sims4Authors ) {
-        let specialCaseReg=new RegExp( specialCase.toLowerCase(),"g" );
-        while( match=specialCaseReg.exec( normalizedFileName ) ) {
-            matches.push( match[ 0 ] );
+    // regex : brackets, braces, and parentheses
+    let bracketRegex=/\[(.*?)\]|\{(.*?)\}|\((.*?)\)/g;
+
+    // Extract words with regex
+    let bracketMatches=Array.from( normalizedFileName.matchAll( bracketRegex ) )
+        .map( match => match[ 1 ]||match[ 2 ]||match[ 3 ] );
+
+    let lowerCasedSims4Authors=Sims4Authors
+        .map( author => author.toLowerCase() )
+        .sort( ( a,b ) => b.length-a.length );
+
+    let findMatch=( wordSet: string[],wholeWord=true ) => {
+        let flag=wholeWord? "\\b":"";
+        for( let specialCase of lowerCasedSims4Authors ) {
+            let specialCaseReg=new RegExp( `${ flag }${ specialCase }${ flag }`,"g" );
+            for( let word of wordSet ) {
+                if( specialCaseReg.test( word ) ) {
+                    return specialCase;
+                }
+            }
         }
+        return '';
     }
 
-    // If no matches are found, return '0'
-    if( matches.length===0 ) {
-        return '0';
-    }
+    // find matches
+    let match=findMatch( bracketMatches )
+        ||findMatch( [ normalizedFileName ] )
+        ||findMatch( [ normalizedFileName ],false );
 
-    // If matches are found, return the longest one
-    // let firstMatch = matches[0]; return firstMatch.toUpperCase();
-    let longestMatch=matches.reduce( ( a,b ) => a.length>b.length? a:b,'' );
-    return longestMatch.toUpperCase();
+    return match? match.toUpperCase():'0';
 }
 
 // Method for validating directory existence
@@ -58,7 +70,7 @@ export const validateDirectory=async ( input: string ) => {
     }
 };
 
-export async function moveFiles (
+export async function moveFiles(
     dirPath: string,
     checkNested: boolean,
     nonCharOption: boolean,
@@ -102,7 +114,7 @@ export async function moveFiles (
     }
 }
 
-export async function ExecutemoveFiles ( asyncFunc: () => Promise<void>,errorHandler: ( err: any ) => void ) {
+export async function ExecutemoveFiles( asyncFunc: () => Promise<void>,errorHandler: ( err: any ) => void ) {
     try {
         await asyncFunc();
     } catch( err ) {
@@ -110,7 +122,7 @@ export async function ExecutemoveFiles ( asyncFunc: () => Promise<void>,errorHan
     }
 }
 
-export async function promptUser () {
+export async function promptUser() {
 
     const { language }=await inquirer.prompt( [
         {
@@ -179,7 +191,7 @@ export async function promptUser () {
     await moveFiles( folderPath,checkNested,nonCharOption,gameName,language );
 }
 
-export function errorHandler ( err: any ) {
+export function errorHandler( err: any ) {
     const errorMessages=[ err.message ];
     console.error( colors.bgRed.black( errorMessages.join( "\n" ) ) );
 }
@@ -187,7 +199,37 @@ export function errorHandler ( err: any ) {
 export const DEFAULT_LOG_FUNCTION=( message: string ) => console.log( message );
 export const DEFAULT_ERROR_FUNCTION=( error: Error ) => console.error( 'Error:',error );
 
-export function moveFilesToRootFolder ( rootFolder: string,options: MoveFilesOptions ): void {
+export function moveFilesRecursively( folderPath: string,rootFolder: string,options: MoveFilesOptions ): void {
+    const { logFunction=DEFAULT_LOG_FUNCTION,errorFunction=DEFAULT_ERROR_FUNCTION }=options;
+    const files=readdirSync( folderPath );
+
+    for( const file of files ) {
+        const filePath=join( folderPath,file );
+        const targetFilePath=join( rootFolder,file );
+
+        if( statSync( filePath ).isDirectory() ) {
+            moveFilesRecursively( filePath,rootFolder,options ); // recurse into subdirectory
+        } else {
+            try {
+                renameSync( filePath,targetFilePath );
+                logFunction( `Moved ${ file } to ${ rootFolder }` );
+            } catch( e: any ) {
+                errorFunction( e );
+            }
+        }
+    }
+
+    if( folderPath!==rootFolder ) { // prevent deletion of the root folder
+        try {
+            rmdirSync( folderPath );
+            logFunction( `Removed folder ${ folderPath }` );
+        } catch( e: any ) {
+            errorFunction( e );
+        }
+    }
+}
+
+export function moveFilesToRootFolder( rootFolder: string,options: MoveFilesOptions ): void {
     const { logFunction=DEFAULT_LOG_FUNCTION,errorFunction=DEFAULT_ERROR_FUNCTION }=options;
     const files=readdirSync( rootFolder,{ withFileTypes: true } );
 
@@ -219,9 +261,9 @@ export function moveFilesToRootFolder ( rootFolder: string,options: MoveFilesOpt
     }
 }
 
-export function promptUserAndMoveFiles ( options: MoveFilesOptions ): void {
+export function promptUserAndMoveFiles( options: MoveFilesOptions ): void {
     inquirer
-        .prompt<Answers>( [
+        .prompt( [
             {
                 type: 'input',
                 name: 'rootFolder',
@@ -229,32 +271,17 @@ export function promptUserAndMoveFiles ( options: MoveFilesOptions ): void {
             },
             {
                 type: 'confirm',
-                name: 'deleteFolders',
-                message: 'Do you want to delete emptied folders after moving the files?',
+                name: 'flatten',
+                message: 'Do you want to flatten nested folders?',
                 default: false,
             },
         ] )
-        .then( ( answers: Answers ) => {
+        .then( ( answers ) => {
             const rootFolder=normalize( answers.rootFolder );
-            moveFilesToRootFolder( rootFolder,options );
-
-            if( answers.deleteFolders ) {
-                const emptyFolders=readdirSync( rootFolder,{ withFileTypes: true } )
-                    .filter(
-                        ( file ) =>
-                            file.isDirectory()&&
-                            readdirSync( join( rootFolder,file.name ) ).length===0
-                    )
-                    .map( ( file ) => join( rootFolder,file.name ) );
-
-                for( const folder of emptyFolders ) {
-                    try {
-                        rmdirSync( folder );
-                        options.logFunction&&options.logFunction( `Removed empty folder ${ folder }` );
-                    } catch( e: any ) {
-                        options.errorFunction&&options.errorFunction( e );
-                    }
-                }
+            if( answers.flatten ) {
+                moveFilesRecursively( rootFolder,rootFolder,options );
+            } else {
+                moveFilesToRootFolder( rootFolder,options );
             }
         } )
         .catch( ( error: Error ) => {
@@ -262,7 +289,7 @@ export function promptUserAndMoveFiles ( options: MoveFilesOptions ): void {
         } );
 }
 
-export async function getUserInput (): Promise<UserInput> {
+export async function getUserInput(): Promise<UserInput> {
     const questions=[
         {
             name: 'directoryPath',
@@ -325,7 +352,7 @@ export async function getUserInput (): Promise<UserInput> {
     return answers;
 }
 
-export async function processFiles ( userInput: UserInput ) {
+export async function processFiles( userInput: UserInput ) {
     try {
         const dir=await opendir( userInput.directoryPath );
         const results: Record<string,string>={};
@@ -380,12 +407,12 @@ export async function processFiles ( userInput: UserInput ) {
     }
 }
 
-export async function getBBP () {
+export async function getBBP() {
     const userInput=await getUserInput();
     await processFiles( userInput );
 }
 
-export async function runGn () {
+export async function runGn() {
     try {
         const answers: AnswersGn=await inquirer.prompt<AnswersGn>( [
             {
