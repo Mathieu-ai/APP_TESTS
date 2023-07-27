@@ -30,9 +30,20 @@ import {
     str7,
     str8,
     readFileUrl,
-    request
-} from "./utils";
+    request,
+    LinkedList,
+    testLinkedList,
+    testLinkedList2,
+    mapWithInterface,
+    mapWithoutInterface,
+    testLinkListObj,
+    data11,
+    b,
+    getMessage,
+    getMessage2
+} from "../utils";
 import { mlProp } from "functions/props";
+import { log } from "console";
 
 const test1=compareTypes( data3,"number",{ getKeys: true } )
 const test2=flat( data,{ props: [ "firstName" ] } )
@@ -59,6 +70,29 @@ const test22=noSoClose( 'user','user' );
 const test23=noSoClose( '123456789','abcdefghi' );
 const test24=noSoClose( 'helloworld','jello9orld' );
 const test25=request( env.ONEDRIVE_URI,{},'GET' )
+// const test26=async () => {
+//     await testLinkedList( 0.1 );
+// }
+// const test27=async () => {
+//     await testLinkedList2( 0.1 );
+// }
+// const test28=testLinkListObj()
+const test29=mapWithInterface( [ "1","2","3" ],( n ) => parseInt( n ) );
+const test30=mapWithInterface<b,number>( [ { a: 1 } ],( n ) => Number( n.a ) );
+const test31=data11
+// const test32=async ( str="Hello, World!",iterations=5,timeout=2 ) => {
+//     await getMessage( str,iterations,timeout );
+// }
+// const test33=getMessage2( "Hello, World!",5,2 );
+// test26();
+// test27()
 // fs.writeFileSync('result.json', test17);
-//console.log(pdf2json('C:/Users/mathie_l/OneDrive - Union Internationale des Chemins de Fer U.I.C/Documents/UIC/PDF/IA.pdf'))
-console.log( test25 );
+//console.log(pdf2json(env.PDF))
+// for( let i=1;i<=31;i++ ) {
+//     try {
+//         console.log( eval( `test${ i }` ) );
+//     } catch( error ) {
+//         continue;
+//     }
+// }
+log( test1 )

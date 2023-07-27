@@ -1,4 +1,6 @@
-export const arr = [
+import { a } from "..";
+
+export const arr=[
     {
         type: "success",
         color: "teal-3",
@@ -12,7 +14,7 @@ export const arr = [
         state: "Affiliate member",
     }
 ]
-export const data = [
+export const data=[
     {
         info: {
             name: {
@@ -34,45 +36,45 @@ export const data = [
         }
     }
 ]
-export const data2 = [
-    data[0].info.name.firstName,
-    data[0].info.name.lastName,
-    arr.map((k: { state: string }) => k.state),
-    data[0].details.dates.ddeb,
-    data[0].details.lastDay,
+export const data2=[
+    data[ 0 ].info.name.firstName,
+    data[ 0 ].info.name.lastName,
+    arr.map( ( k: { state: string } ) => k.state ),
+    data[ 0 ].details.dates.ddeb,
+    data[ 0 ].details.lastDay,
 ]
-export const data3 = [1, "hello", { name: "John", age: 30 }, true, { name: "Jane", age: 25 }]
-export const data4 = [
-    { id: 1, name: 'John', state: [{ name: "One", color: "red" }] },
-    { id: 2, name: 'Pierre', state: [{ name: "Two", color: "blue" }] },
-    { id: 3, name: 'Kate', state: [{ name: "One", color: "red" }] }
+export const data3=[ 1,"hello",{ name: "John",age: 30 },true,{ name: "Jane",age: 25 } ]
+export const data4=[
+    { id: 1,name: 'John',state: [ { name: "One",color: "red" } ] },
+    { id: 2,name: 'Pierre',state: [ { name: "Two",color: "blue" } ] },
+    { id: 3,name: 'Kate',state: [ { name: "One",color: "red" } ] }
 ];
-export const data5 = ["a", "b", "a"];
-export const data6 = [
-    { id: 1, name: 'John', state: { name: "One" } },
-    { id: 2, name: 'Pierre', state: { name: "Two" } },
-    { id: 3, name: 'Kate', state: { name: "One" } }
+export const data5=[ "a","b","a" ];
+export const data6=[
+    { id: 1,name: 'John',state: { name: "One" } },
+    { id: 2,name: 'Pierre',state: { name: "Two" } },
+    { id: 3,name: 'Kate',state: { name: "One" } }
 ];
-export const data7 = {
-    "&AElig": { "codepoints": [198], "characters": "\u00C6" },
-    "&AElig;": { "codepoints": [198], "characters": "\u00C6" },
-    "&AMP": { "codepoints": [38], "characters": "\u0026" },
-    "&AMP;": { "codepoints": [38], "characters": "\u0026" },
-    "&Aacute": { "codepoints": [193], "characters": "\u00C1" },
-    "&Aacute;": { "codepoints": [193], "characters": "\u00C1" },
-    "&Abreve;": { "codepoints": [258], "characters": "\u0102" },
-    "&Acirc": { "codepoints": [194], "characters": "\u00C2" },
-    "&Acirc;": { "codepoints": [194], "characters": "\u00C2" },
-    "&Acy;": { "codepoints": [1040], "characters": "\u0410" },
-    "&Afr;": { "codepoints": [120068], "characters": "\uD835\uDD04" },
+export const data7={
+    "&AElig": { "codepoints": [ 198 ],"characters": "\u00C6" },
+    "&AElig;": { "codepoints": [ 198 ],"characters": "\u00C6" },
+    "&AMP": { "codepoints": [ 38 ],"characters": "\u0026" },
+    "&AMP;": { "codepoints": [ 38 ],"characters": "\u0026" },
+    "&Aacute": { "codepoints": [ 193 ],"characters": "\u00C1" },
+    "&Aacute;": { "codepoints": [ 193 ],"characters": "\u00C1" },
+    "&Abreve;": { "codepoints": [ 258 ],"characters": "\u0102" },
+    "&Acirc": { "codepoints": [ 194 ],"characters": "\u00C2" },
+    "&Acirc;": { "codepoints": [ 194 ],"characters": "\u00C2" },
+    "&Acy;": { "codepoints": [ 1040 ],"characters": "\u0410" },
+    "&Afr;": { "codepoints": [ 120068 ],"characters": "\uD835\uDD04" },
 }
-export const data8 = [
-    { id: 1, name: 'Alice' },
-    { id: 2, name: 'Bob' },
-    { id: 3, name: 'Alice' },
-    { id: 4, name: 'Charlie' },
+export const data8=[
+    { id: 1,name: 'Alice' },
+    { id: 2,name: 'Bob' },
+    { id: 3,name: 'Alice' },
+    { id: 4,name: 'Charlie' },
 ];
-export const data9 = {
+export const data9={
     id: 1,
     name: 'John',
     lastName: 'Doe',
@@ -82,17 +84,17 @@ export const data9 = {
     },
     family: {
         parents: [
-            { name: 'Pierre', lastName: 'Doe', role: 'father' },
-            { name: 'Blanche', lastName: 'Doe', role: 'mother' }
+            { name: 'Pierre',lastName: 'Doe',role: 'father' },
+            { name: 'Blanche',lastName: 'Doe',role: 'mother' }
         ],
         broAndSis: [
-            { name: 'Jean', lastName: 'Doe', role: 'brother' },
-            { name: 'Clementine', lastName: 'Doe', role: 'sister' }
+            { name: 'Jean',lastName: 'Doe',role: 'brother' },
+            { name: 'Clementine',lastName: 'Doe',role: 'sister' }
         ]
     },
-    moneyPerTrim: [1500, 1521, 1521]
+    moneyPerTrim: [ 1500,1521,1521 ]
 };
-export const data10 = [
+export const data10=[
     {
         "id": 1,
         "name": "John",
@@ -107,14 +109,16 @@ export const data10 = [
         },
         "family": {
             "parents": [
-                { "name": "Pierre", "lastName": "Doe", "role": "father" },
-                { "name": "Blanche", "lastName": "Doe", "role": "mother" }
+                { "name": "Pierre","lastName": "Doe","role": "father" },
+                { "name": "Blanche","lastName": "Doe","role": "mother" }
             ],
             "broAndSis": [
-                { "name": "Jean", "lastName": "Doe", "role": "brother" },
-                { "name": "Clementine", "lastName": "Doe", "role": "sister" }
+                { "name": "Jean","lastName": "Doe","role": "brother" },
+                { "name": "Clementine","lastName": "Doe","role": "sister" }
             ]
         },
-        "moneyPerTrim": [1500, 1521, 1521]
+        "moneyPerTrim": [ 1500,1521,1521 ]
     }
 ]
+
+export const data11: a.a={ a: 1,b: "2" }
