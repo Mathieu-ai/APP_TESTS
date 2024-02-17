@@ -122,3 +122,5 @@ export const data10=[
 ]
 
 export const data11: a.a={ a: 1,b: "2" }
+
+export const data12 = [1, 2, 3, 4];

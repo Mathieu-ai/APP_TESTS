@@ -1,5 +1,13 @@
-export interface FunctionMap<Input,Output> {
-    ( arg: Input ): Output;
+export interface FunctionMap<I,O> {
+    ( arg: I ): O;
+}
+
+export interface FunctionForEach<I, O> {
+    (arg: I): O;
+}
+
+export interface FunctionLoop<I, IndexType> {
+    (index: IndexType, item: I): void;
 }
 
 export namespace a {

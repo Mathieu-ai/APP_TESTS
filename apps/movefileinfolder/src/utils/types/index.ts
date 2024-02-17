@@ -38,3 +38,13 @@ export interface UserInput {
     outputPath: string;
     pattern: Pattern;
 }
+
+export interface MoveFilesOptions {
+    logFunction?: (message: string) => void;
+    errorFunction?: (error: Error) => void;
+}
+
+export interface DuplicateFile {
+    name: string;
+    path: string;
+}

@@ -4,7 +4,7 @@
     "description": "",
     "scripts": {
         "format": "turbo run format --parallel",
-        "playground": "ts-node ./apps/playground"
+        "playground": "ts-node ./apps/playground/src "
     },
     "keywords": [],
     "author": "",

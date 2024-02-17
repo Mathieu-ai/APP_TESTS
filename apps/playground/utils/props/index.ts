@@ -1,3 +1,1 @@
-export * from './props/data'
-export * from './props/str'
-export * from './props/type'
+export * from './props'

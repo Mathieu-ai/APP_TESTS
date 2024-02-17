@@ -1,9 +1,6 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "types": [
-            "node",
-        ],
         "declaration": true,
         "removeComments": true,
         "emitDecoratorMetadata": true,
