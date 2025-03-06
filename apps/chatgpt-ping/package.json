@@ -10,14 +10,16 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "dotenv": "^16.0.3",
-        "inquirer": "^8.0.0",
-        "openai": "^3.2.1"
+        "dotenv": "^16.4.7",
+        "inquirer": "^8.2.6",
+        "openai": "^3.3.0",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.8.2"
     },
     "devDependencies": {
-        "@types/colors": "^1.2.1",
-        "@types/inquirer": "^9.0.3",
+        "@types/colors": "^1.2.4",
+        "@types/inquirer": "^9.0.7",
         "colors": "^1.4.0",
-        "generic-functions.mlai": "^0.4.5"
+        "generic-functions.mlai": "^0.4.9"
     }
 }
